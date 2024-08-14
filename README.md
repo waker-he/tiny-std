@@ -11,3 +11,5 @@
     - `vector`
     - `small_vector` (Boost)
     - `inplace_vector` (C++26) 
+- [smart pointers](./doc/smart_pointers.md)
+    - `unique_ptr` (C++11)

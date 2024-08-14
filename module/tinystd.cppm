@@ -5,3 +5,4 @@ export import :vector_mixin;
 export import :small_vector;
 export import :vector;
 export import :inplace_vector;
+export import :unique_ptr;

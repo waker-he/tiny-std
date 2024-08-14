@@ -7,4 +7,5 @@ target_sources(tinystd
       vectors/small_vector.cppm
       vectors/vector.cppm
       vectors/inplace_vector.cppm
+      smart_pointers/unique_ptr.cppm
 )
