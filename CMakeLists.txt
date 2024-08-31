@@ -11,7 +11,7 @@ set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD
 # Set compiler to clang++ and Use libc++ as the standard library
 # must be put before project()
 set(CMAKE_CXX_COMPILER clang++)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -fexperimental-library")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++ -lc++abi")
 
 set(CMAKE_CXX_STANDARD 23)

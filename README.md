@@ -13,3 +13,4 @@
     - `inplace_vector` (C++26) 
 - [smart pointers](./doc/smart_pointers.md)
     - `unique_ptr` (C++11)
+    - `shared_ptr` (C++11)

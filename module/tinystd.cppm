@@ -6,3 +6,4 @@ export import :small_vector;
 export import :vector;
 export import :inplace_vector;
 export import :unique_ptr;
+export import :shared_ptr;
