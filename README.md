@@ -15,3 +15,4 @@
     - `unique_ptr` (C++11)
     - `shared_ptr` (C++11)
     - `weak_ptr` (C++11)
+- [`span`](./doc/span.md) (C++20)

@@ -9,3 +9,4 @@ export import :unique_ptr;
 export import :shared_ptr;
 export import :weak_ptr;
 export import :enable_shared_from_this;
+export import :span;
