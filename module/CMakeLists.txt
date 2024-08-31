@@ -7,8 +7,9 @@ target_sources(tinystd
       vectors/small_vector.cppm
       vectors/vector.cppm
       vectors/inplace_vector.cppm
+      helpers/manual_lifetime.cpp
       smart_pointers/unique_ptr.cppm
       smart_pointers/shared_ptr.cppm
       smart_pointers/control_block.cpp
-      helpers/manual_lifetime.cpp
+      smart_pointers/weak_ptr.cppm
 )

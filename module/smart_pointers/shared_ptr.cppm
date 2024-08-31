@@ -7,7 +7,7 @@ import :control_block;
 namespace tinystd
 {
 
-template <typename T>
+export template <non_array T>
 class weak_ptr;
 
 export template <non_array T>
@@ -234,7 +234,7 @@ private:
     template <non_array U>
     friend class shared_ptr;
 
-    template <typename U>
+    template <non_array U>
     friend class weak_ptr;
 
     template <typename U, typename... Args>
