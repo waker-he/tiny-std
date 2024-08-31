@@ -8,6 +8,8 @@ import :shared_ptr;
 namespace tinystd
 {
 
+export class enable_shared_from_this;
+
 export template <non_array T>
 class [[clang::trivial_abi]] weak_ptr
 {
@@ -130,8 +132,12 @@ private:
     T*             m_ptr;
     control_block* m_cb;
 
+    weak_ptr(T* ptr, control_block* cb) noexcept : m_ptr{ptr}, m_cb{cb} {}
+
     template <non_array U>
     friend class weak_ptr;
+
+    friend class enable_shared_from_this;
 };
 
 export template <typename T>

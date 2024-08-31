@@ -11,3 +11,6 @@ target_link_libraries(test_shared_ptr Boost::ut tinystd)
 
 add_executable(test_weak_ptr test_weak_ptr.cpp)
 target_link_libraries(test_weak_ptr Boost::ut tinystd)
+
+add_executable(test_enable_shared_from_this test_enable_shared_from_this.cpp)
+target_link_libraries(test_enable_shared_from_this Boost::ut tinystd)

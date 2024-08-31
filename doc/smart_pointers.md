@@ -2,6 +2,7 @@
 
 ## `unique_ptr<T>`
 
+- code: [unique_ptr.cppm](../module/smart_pointers/unique_ptr.cppm)
 - type requirements
     - `T`: not an array
 - to make moving `unique_ptr` as cheap as raw pointer:
@@ -10,6 +11,9 @@
 
 ## `shared_ptr<T>` and `weak_ptr<T>`
 
+- code:
+    - [shared_ptr.cppm](../module/smart_pointers/shared_ptr.cppm)
+    - [weak_ptr.cppm](../module/smart_pointers/weak_ptr.cppm)
 - type requirements
     - `T`: not an array
 - applied attribute [`[[clang::trivial_abi]]`](https://clang.llvm.org/docs/AttributeReference.html#trivial-abi)
@@ -20,7 +24,7 @@
             - `make_shared` to allocate control block and object together
             - custom allocator and deleter (not implemented in `tinystd::shared_ptr<T>`)
         - __destructor and `delete_obj` are `protected`__: control block is reponsible for deleting itself
-        - __data members__ 
+        - __non-static data members__ 
             - shared_count: number of `shared_ptr` referencing it
             - weak_count: number of `weak_ptr` referencing it + (shared_cnt != 0)
         - __atomic operations__ on reference counts:
@@ -46,3 +50,12 @@
 - consequence of enabling alias pointers:
     - `control_block_with_ptr` needs to store the pointer to the actual object managed
     - `weak_ptr<T>` needs to store `T*` in addition to `control_block*`
+
+## `enalble_shared_from_this`
+
+- code: [enable_shared_from_this.cppm](../module/smart_pointers/enable_shared_from_this.cppm)
+- inheriting publicly will enable an object to take part in its own lifetime management when managed by `shared_ptr`
+- constructing a `shared_ptr` for an object that is already managed by another `shared_ptr` (through constructor `shared_ptr(T* ptr)`) is undefined behavior
+- implementation uses C++23 __deducing this__ to replace CRTP
+- non-static data member:
+    - `control_block*`

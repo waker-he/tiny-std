@@ -12,4 +12,5 @@ target_sources(tinystd
       smart_pointers/shared_ptr.cppm
       smart_pointers/control_block.cpp
       smart_pointers/weak_ptr.cppm
+      smart_pointers/enable_shared_from_this.cppm
 )

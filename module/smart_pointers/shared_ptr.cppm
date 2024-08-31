@@ -10,6 +10,8 @@ namespace tinystd
 export template <non_array T>
 class weak_ptr;
 
+export class enable_shared_from_this;
+
 export template <non_array T>
 class [[clang::trivial_abi]] shared_ptr
 {
@@ -26,6 +28,10 @@ public:
         : m_ptr{ptr}
         , m_cb{::new control_block_with_ptr<U>(ptr)}
     {
+        if constexpr (std::derived_from<U, enable_shared_from_this>)
+        {
+            ptr->m_cb = m_cb;
+        }
     }
 
     // copy/move constructors
@@ -66,6 +72,10 @@ public:
                     : nullptr
           }
     {
+        if constexpr (std::derived_from<U, enable_shared_from_this>)
+        {
+            if (m_ptr) m_ptr->m_cb = m_cb;
+        }
     }
 
     // same as weak_ptr<T>::lock() except that it thows if weak_ptr is empty
@@ -237,6 +247,8 @@ private:
     template <non_array U>
     friend class weak_ptr;
 
+    friend class enable_shared_from_this;
+
     template <typename U, typename... Args>
     friend auto
     make_shared(Args&&...) -> shared_ptr<U>;
@@ -254,6 +266,10 @@ export template <typename T, typename... Args>
 make_shared(Args&&... args) -> shared_ptr<T>
 {
     auto cb_ptr = ::new control_block_with_obj<T>(std::forward<Args>(args)...);
+    if constexpr (std::derived_from<T, enable_shared_from_this>)
+    {
+        cb_ptr->get_ptr()->m_cb = cb_ptr;
+    }
     return shared_ptr<T>(cb_ptr->get_ptr(), cb_ptr);
 }
 
