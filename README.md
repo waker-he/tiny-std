@@ -5,6 +5,7 @@
 - __Compiler__: clang++ 19.1.0
 - Use __C++20 module__ to organize code
 - __unit test framework__: [boost-ext/ut](https://github.com/boost-ext/ut)
+- __benchmark library__: [nanobench](https://github.com/martinus/nanobench)
 
 ## Implemented
 
@@ -18,11 +19,11 @@
     - `weak_ptr` (C++11)
     - `enable_shared_from_this` (C++11)
 - [`span`](./doc/span.md) (C++20)
+- [`waitfree_spsc_queue`](./doc/waitfree_spsc_queue.md) (Boost `boost::lock_free:spsc_queue`)
 
 ## Plan to Implement
 
 - lock-free
-    - `waitfree_spsc_queue` (Boost)
     - `hazard_pointer` (C++26)
     - `atomic_shared_ptr` (C++20)
 - `variant` (C++17): learn value-semantics-based implementation of Visitor design pattern
@@ -44,3 +45,5 @@
     - use __deducing this__ to implement mixin class and write overloaded member functions as a single member function template
 - smart pointers
     - C++ memory model and relaxed atomic
+- `waitfree_spsc_queue`
+    - lock free programming and optimizations

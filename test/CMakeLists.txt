@@ -1,19 +1,18 @@
+# use Boost.UT as unit test framework
 find_package(ut REQUIRED)
 
-add_executable(test_vectors test_vectors.cpp)
-target_link_libraries(test_vectors Boost::ut tinystd)
+# Function to create test targets with common settings
+function(add_test NAME)
+    set(prefix "test_")
+    set(target_name "${prefix}${NAME}")
+    add_executable(${target_name} "${target_name}.cpp")
+    target_link_libraries(${target_name} PRIVATE tinystd Boost::ut) # Link to your main project library if needed
+endfunction()
 
-add_executable(test_unique_ptr test_unique_ptr.cpp)
-target_link_libraries(test_unique_ptr tinystd)
-
-add_executable(test_shared_ptr test_shared_ptr.cpp)
-target_link_libraries(test_shared_ptr Boost::ut tinystd)
-
-add_executable(test_weak_ptr test_weak_ptr.cpp)
-target_link_libraries(test_weak_ptr Boost::ut tinystd)
-
-add_executable(test_enable_shared_from_this test_enable_shared_from_this.cpp)
-target_link_libraries(test_enable_shared_from_this Boost::ut tinystd)
-
-add_executable(test_span test_span.cpp)
-target_link_libraries(test_span Boost::ut tinystd)
+add_test(vectors)
+add_test(unique_ptr)
+add_test(shared_ptr)
+add_test(weak_ptr)
+add_test(enable_shared_from_this)
+add_test(span)
+add_test(waitfree_spsc_queue)

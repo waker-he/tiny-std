@@ -14,4 +14,5 @@ target_sources(tinystd
       smart_pointers/weak_ptr.cppm
       smart_pointers/enable_shared_from_this.cppm
       span.cppm
+      waitfree_spsc_queue.cppm
 )

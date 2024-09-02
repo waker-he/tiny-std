@@ -32,6 +32,17 @@ include(cmake/CPM.cmake)
 
 # Dependencies Management through CPM
 CPMAddPackage("gh:boost-ext/ut@2.1.0")
+CPMAddPackage("gh:martinus/nanobench@4.3.11")
 
 add_subdirectory(module)
-add_subdirectory(test)
+
+# Conditionally include subdirectories based on build type
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    message(STATUS "Building in Release mode. Including benchmark directory.")
+    add_subdirectory(benchmark)
+elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message(STATUS "Building in Debug mode. Including test directory.")
+    add_subdirectory(test)
+else()
+    message(WARNING "Unknown build type: ${CMAKE_BUILD_TYPE}. No additional targets will be built.")
+endif()

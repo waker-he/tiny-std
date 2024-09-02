@@ -10,3 +10,4 @@ export import :shared_ptr;
 export import :weak_ptr;
 export import :enable_shared_from_this;
 export import :span;
+export import :waitfree_spsc_queue;
