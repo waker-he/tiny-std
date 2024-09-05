@@ -9,5 +9,4 @@ function(add_benchmark NAME)
     target_link_libraries(${target_name} PRIVATE tinystd nanobench ${ARGN}) # Link to your main project library if needed
 endfunction()
 
-find_package(Boost REQUIRED)
 add_benchmark(waitfree_spsc_queue)

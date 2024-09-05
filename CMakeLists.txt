@@ -34,6 +34,9 @@ include(cmake/CPM.cmake)
 CPMAddPackage("gh:boost-ext/ut@2.1.0")
 CPMAddPackage("gh:martinus/nanobench@4.3.11")
 
+# Boost is not managed by CPM, might change in future
+find_package(Boost 1.81 REQUIRED)
+
 add_subdirectory(module)
 add_subdirectory(test)
 

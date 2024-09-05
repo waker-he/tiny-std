@@ -4,8 +4,10 @@
 - __Proof of concept__: not feature-complete, not heavily optimized
 - __Compiler__: clang++ 19.1.0
 - Use __C++20 module__ to organize code
-- __unit test framework__: [boost-ext/ut](https://github.com/boost-ext/ut)
-- __benchmark library__: [nanobench](https://github.com/martinus/nanobench)
+- __Dependencies__
+    - [boost-ext/ut](https://github.com/boost-ext/ut): unit test, managed by CPM
+    - [nanobench](https://github.com/martinus/nanobench): benchmark, managed by CPM
+    - Boost 1.81+: manually installed
 
 ## Implemented
 
