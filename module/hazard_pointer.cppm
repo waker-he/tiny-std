@@ -1,6 +1,5 @@
 module;
 
-#include <boost/unordered/unordered_flat_set.hpp>
 #include <new>
 export module tinystd:hazard_pointer;
 
@@ -53,7 +52,7 @@ public:
         // During cleanup, the list of hazard pointers will be added to
         // protected_set, this is used to avoid scanning the list of hazard
         // pointers once for every object to reclaim.
-        boost::unordered_flat_set<T const *> protected_set;
+        // boost::unordered_flat_set<T const *> protected_set;
 
         // hp_slot will never be destroyed, leaked memory will be reclaimed by
         // OS when the process ends.
@@ -78,6 +77,7 @@ public:
                 (init_slots.size() + hp_slot_list_cache.size()) * 2;
             if (retired_list.size() > cleanup_threshold)
             {
+                std::unordered_set<T const *> protected_set;
                 // Scanning the hazard pointer list to populate protected_set
                 for (auto slot_ptr : init_slots)
                 {
@@ -115,7 +115,7 @@ public:
                 );
 
                 // clear all elements while maintaining the memory for next use
-                protected_set.clear();
+                // protected_set.clear();
             }
         }
     };

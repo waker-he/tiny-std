@@ -16,4 +16,13 @@ add_test(weak_ptr)
 add_test(enable_shared_from_this)
 add_test(span)
 add_test(waitfree_spsc_queue)
+# When using hazard_pointer in implementation of my atomic_shared_ptr, this
+# test program suddenly does not compile (reporting some unreadable error
+# message regarding the use of Boost) without any modifications to the
+# hazard_pointer source file and the test file. It may be an issue of
+# the compatibility between C++20 modules and Boost library.
+# If we remove the use of hazard_pointer in control_block.cpp, then it
+# can compile and run. Now I replace boost::unordered_flat_set with
+# std::unordered_set.
 add_test(hazard_pointer)
+add_test(atomic_shared_ptr)

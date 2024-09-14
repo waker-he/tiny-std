@@ -59,3 +59,18 @@
 - implementation uses C++23 __deducing this__ to replace CRTP
 - non-static data member:
     - `control_block*`
+
+## `atomic_shared_ptr`
+
+- commented code: [atomic_shared_ptr.cppm](../module/smart_pointers/atomic_shared_ptr.cppm)
+- __lock-free implementation__: use [`hazard_pointer`](./hazard_pointer.md) as deferred memory reclamation mechanism
+    - intrusively make `control_block` calls `retire(this)` to replace `::delete this`
+    - We can make the hazard pointer non-intrusive here by increasing the `weak_count` when using hazard pointer and setting the custom deleter to `decrement_weak()`, but that involves additional atomic operations and might not worth the non-intrusive property.
+- benchmark results against `boost::atomic_shared_ptr` isn't good, indicating big optimization space for `hazard_pointer`
+
+| relative |               ns/op |                op/s |    err% |     total | benchmark
+|---------:|--------------------:|--------------------:|--------:|----------:|:----------
+|   100.0% |      611,095,511.70 |                1.64 |    4.0% |     74.08 | `Boost Atomic Shared Ptr Stack`
+|    72.1% |      847,965,775.50 |                1.18 |    0.9% |    101.15 | `TinySTD Atomic Shared Ptr Stack`
+- limitation
+    - does not support alias pointer

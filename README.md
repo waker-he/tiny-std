@@ -20,6 +20,7 @@
     - `shared_ptr` (C++11)
     - `weak_ptr` (C++11)
     - `enable_shared_from_this` (C++11)
+    - `atomic_shared_ptr` (C++20)
 - [`span`](./doc/span.md) (C++20)
 - [`waitfree_spsc_queue`](./doc/waitfree_spsc_queue.md) (Boost `boost::lock_free:spsc_queue`)
 - [`hazard_pointer`](./doc/hazard_pointer.md) (C++26)
@@ -38,13 +39,11 @@
     - use __deducing this__ to implement mixin class and write overloaded member functions as a single member function template
 - smart pointers
     - C++ memory model and relaxed atomic
-- `waitfree_spsc_queue`/`hazard_pointer`
+- `waitfree_spsc_queue`
     - lock free programming and optimizations
 
 ## Plan to Implement
 
-- lock-free
-    - `atomic_shared_ptr` (C++20)
 - `variant` (C++17): learn value-semantics-based implementation of Visitor design pattern
 - `optional` (C++17): deepen understanding of monadic operations
 - `generator` (C++23): gain experience programming with C++20 coroutine

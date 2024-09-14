@@ -13,6 +13,9 @@ class weak_ptr;
 export class enable_shared_from_this;
 
 export template <non_array T>
+class atomic_shared_ptr;
+
+export template <non_array T>
 class [[clang::trivial_abi]] shared_ptr
 {
 public:
@@ -249,6 +252,9 @@ private:
 
     friend class enable_shared_from_this;
 
+    template <non_array U>
+    friend class atomic_shared_ptr;
+
     template <typename U, typename... Args>
     friend auto
     make_shared(Args&&...) -> shared_ptr<U>;
@@ -268,9 +274,9 @@ make_shared(Args&&... args) -> shared_ptr<T>
     auto cb_ptr = ::new control_block_with_obj<T>(std::forward<Args>(args)...);
     if constexpr (std::derived_from<T, enable_shared_from_this>)
     {
-        cb_ptr->get_ptr()->m_cb = cb_ptr;
+        static_cast<T*>(cb_ptr->get_ptr())->m_cb = cb_ptr;
     }
-    return shared_ptr<T>(cb_ptr->get_ptr(), cb_ptr);
+    return shared_ptr<T>(static_cast<T*>(cb_ptr->get_ptr()), cb_ptr);
 }
 
 export template <typename T1, typename T2>

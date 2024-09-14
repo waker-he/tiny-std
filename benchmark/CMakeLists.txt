@@ -10,3 +10,4 @@ function(add_benchmark NAME)
 endfunction()
 
 add_benchmark(waitfree_spsc_queue)
+add_benchmark(atomic_shared_ptr)

@@ -1,7 +1,13 @@
+module;
+
+// To use hazard pointer, we must include unordered_flat_set, otherwise we get
+// compiler error saying that SIMD intrinsics are not found.
+#include <boost/unordered/unordered_flat_set.hpp>
 export module tinystd:control_block;
 
 import std;
 import :manual_lifetime;
+import :hazard_pointer;
 
 namespace tinystd
 {
@@ -12,6 +18,7 @@ public:
     using count_type = std::uint32_t;
 
     control_block() noexcept : m_shared_count{1}, m_weak_count{1} {}
+    virtual ~control_block() noexcept = default;
 
     void
     increment_shared() noexcept
@@ -31,8 +38,8 @@ public:
     {
         auto old_cnt = m_shared_count.load(std::memory_order_relaxed);
         do {
-            if (!old_cnt) return false;
-        } while (m_shared_count.compare_exchange_weak(
+            if (old_cnt == 0) return false;
+        } while (!m_shared_count.compare_exchange_weak(
             old_cnt, old_cnt + 1, std::memory_order_relaxed
         ));
         return true;
@@ -54,7 +61,12 @@ public:
     {
         if (m_weak_count.fetch_sub(1, std::memory_order_relaxed) == 1)
         {
-            ::delete this;
+            // We can make the hazard pointer non-intrusive here by increasing
+            // the weak_count when using hazard pointer and setting the custom
+            // deleter to decrement_weak(), but that involves additional
+            // atomic operations and might not worth the non-intrusive property.
+            hazard_pointer<control_block>::retire(this);
+            // ::delete this;
         }
     }
 
@@ -64,8 +76,10 @@ public:
         return m_shared_count.load(std::memory_order_relaxed);
     }
 
+    virtual auto
+    get_ptr() noexcept -> void* = 0;
+
 protected:
-    virtual ~control_block() noexcept = default;
     virtual void
     delete_obj() noexcept = 0;
 
@@ -84,6 +98,12 @@ public:
     delete_obj() noexcept override
     {
         ::delete m_ptr;
+    }
+
+    auto
+    get_ptr() noexcept -> void* override
+    {
+        return m_ptr;
     }
 
 private:
@@ -107,7 +127,7 @@ public:
     }
 
     auto
-    get_ptr() noexcept -> T*
+    get_ptr() noexcept -> void* override
     {
         return std::addressof(m_obj.get());
     }

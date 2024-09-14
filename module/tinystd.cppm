@@ -12,3 +12,4 @@ export import :enable_shared_from_this;
 export import :span;
 export import :waitfree_spsc_queue;
 export import :hazard_pointer;
+export import :atomic_shared_ptr;

@@ -16,4 +16,5 @@ target_sources(tinystd
       span.cppm
       waitfree_spsc_queue.cppm
       hazard_pointer.cppm
+      smart_pointers/atomic_shared_ptr.cppm
 )
