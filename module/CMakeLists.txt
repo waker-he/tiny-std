@@ -15,4 +15,5 @@ target_sources(tinystd
       smart_pointers/enable_shared_from_this.cppm
       span.cppm
       waitfree_spsc_queue.cppm
+      hazard_pointer.cppm
 )
