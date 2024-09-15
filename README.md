@@ -24,6 +24,7 @@
 - [`span`](./doc/span.md) (C++20)
 - [`waitfree_spsc_queue`](./doc/waitfree_spsc_queue.md) (Boost `boost::lock_free:spsc_queue`)
 - [`hazard_pointer`](./doc/hazard_pointer.md) (C++26)
+- [`any`](./doc/any.md) (C++17)
 
 ## Learnings
 
@@ -39,8 +40,10 @@
     - use __deducing this__ to implement mixin class and write overloaded member functions as a single member function template
 - smart pointers
     - C++ memory model and relaxed atomic
-- `waitfree_spsc_queue`
+- `waitfree_spsc_queue`/`hazard_pointer`/`atomic_shared_ptr`
     - lock free programming and optimizations
+- `any`
+    - type erasure
 
 ## Plan to Implement
 

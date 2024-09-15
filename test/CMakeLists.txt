@@ -26,3 +26,4 @@ add_test(waitfree_spsc_queue)
 # std::unordered_set.
 add_test(hazard_pointer)
 add_test(atomic_shared_ptr)
+add_test(any)
