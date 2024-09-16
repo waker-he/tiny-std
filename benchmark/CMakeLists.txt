@@ -11,3 +11,4 @@ endfunction()
 
 add_benchmark(waitfree_spsc_queue)
 add_benchmark(atomic_shared_ptr)
+add_benchmark(function)

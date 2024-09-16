@@ -18,4 +18,5 @@ target_sources(tinystd
       hazard_pointer.cppm
       smart_pointers/atomic_shared_ptr.cppm
       any.cppm
+      function.cppm
 )

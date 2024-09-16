@@ -25,6 +25,7 @@
 - [`waitfree_spsc_queue`](./doc/waitfree_spsc_queue.md) (Boost `boost::lock_free:spsc_queue`)
 - [`hazard_pointer`](./doc/hazard_pointer.md) (C++26)
 - [`any`](./doc/any.md) (C++17)
+- [`function`](./doc/function.md) (C++11)
 
 ## Learnings
 
@@ -42,7 +43,7 @@
     - C++ memory model and relaxed atomic
 - `waitfree_spsc_queue`/`hazard_pointer`/`atomic_shared_ptr`
     - lock free programming and optimizations
-- `any`
+- `any`/`function`
     - type erasure
 
 ## Plan to Implement
