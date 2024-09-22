@@ -15,7 +15,7 @@
     - it requires
         - methods: `data`, `size`
 <!-- - applied attribute [`[[clang::trivial_abi]]`](https://clang.llvm.org/docs/AttributeReference.html#trivial-abi) -->
-- __relocate__ (noexcept if `__is_trivially_relocatable(T)` or `std::is_trivially_move_constructible_v<T>`)
+- __relocate__ (noexcept if `__is_trivially_relocatable(T)` or `std::is_nothrow_move_constructible_v<T>`)
     - if `__is_trivially_relocatable(T)`:
         - perform `memcpy`
     - else
