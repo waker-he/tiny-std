@@ -81,7 +81,7 @@ public:
         return make_shared_from_cb(old_cb);
     }
 
-    [[nodiscard("might have spurious failure")]] auto
+    [[nodiscard("might have ABA")]] auto
     compare_exchange_weak(
         shared_ptr<T>&    expected,
         shared_ptr<T>&&   desired,
@@ -91,7 +91,8 @@ public:
     {
         // Avoid changing expected.m_cb when doing CAS on m_cb
         auto expected_cb = expected.m_cb;
-        if (m_cb.compare_exchange_weak(
+        // spurious failure can be expensive as we need a load if failed
+        if (m_cb.compare_exchange_strong(
                 expected_cb, desired.m_cb, success, failure
             ))
         {
@@ -104,13 +105,9 @@ public:
         {
             // if failed, desired won't be moved from and will stay the same.
 
-            // We have an unconditional load here to set expected since we have
-            // no way to know whether the cause of m_cb.compare_exchange_weak
-            // failure is spurious, m_cb might have changed here after the CAS.
-            //
-            // Even there is no spurious failure, there might be ABA and
-            // expected stays the same, so for compare_exchange_strong, we have
-            // to use a different algorithm than compare_exchange_weak.
+            // There might be ABA and expected stays the same, so for
+            // compare_exchange_strong, we have to use a different algorithm
+            // than compare_exchange_weak.
             expected = load();
             return false;
         }
@@ -135,7 +132,7 @@ public:
                 return true;
             }
         } while (old_expected_cb == expected.m_cb);
-        // Loops if expected ABAs or the weak operation fails spuriously
+        // Loops if expected ABAs
 
         return false;
     }
