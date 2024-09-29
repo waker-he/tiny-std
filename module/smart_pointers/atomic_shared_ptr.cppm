@@ -105,7 +105,7 @@ public:
         {
             // if failed, desired won't be moved from and will stay the same.
 
-            // There might be ABA and expected stays the same, so for
+            // There might be a store and expected stays the same, so for
             // compare_exchange_strong, we have to use a different algorithm
             // than compare_exchange_weak.
             expected = load();
@@ -132,7 +132,7 @@ public:
                 return true;
             }
         } while (old_expected_cb == expected.m_cb);
-        // Loops if expected ABAs
+        // Loops if expected stays the same instead of return false
 
         return false;
     }
