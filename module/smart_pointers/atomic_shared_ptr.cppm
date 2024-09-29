@@ -89,7 +89,11 @@ public:
         std::memory_order failure
     ) noexcept -> bool
     {
-        // Avoid changing expected.m_cb when doing CAS on m_cb
+        // Avoid changing expected.m_cb when doing CAS on m_cb, we cannot
+        // directly CAS on m_cb because if we do that and the CAS fails,
+        // before we can protect the newly assigned m_cb or increment
+        // shared count there can be a store that deallocates the control
+        // block and make the dereference UB.
         auto expected_cb = expected.m_cb;
         // spurious failure can be expensive as we need a load if failed
         if (m_cb.compare_exchange_strong(
